@@ -1,22 +1,22 @@
-# 🚀 Portfolio Platform — Full Stack App
+#  Portfolio Platform — Full Stack App
 
 A **production-ready**, multilingual portfolio platform built with **React + Node.js + Express + PostgreSQL**.
 
-## ✨ Feature Overview
+##  Feature Overview
 
 | Feature | Details |
 |---|---|
-| 🔐 Auth | JWT access + refresh tokens, role-based (user/admin) |
-| 🌐 i18n | KZ / RU / EN with runtime switching |
-| 🎨 Theme | Light / Dark mode with CSS variables |
-| 📱 Responsive | Mobile-first, fully adaptive |
-| ⚡ Animated BG | Particle canvas, gradient orbs, parallax effects |
-| 🎯 CRUD | Projects, Blog, Certificates, Skills, Experience, Education |
-| 📊 Analytics | Dashboard with views, top content, message stats |
-| 📬 Contact Form | DB-stored messages with admin inbox |
-| 🖼 File Uploads | Avatar, project covers, certificate images |
-| 🔍 Search & Filter | Full-text search, category/status filters, pagination |
-| 🛡 Security | Helmet, CORS, rate limiting, bcrypt, validation |
+|  Auth | JWT access + refresh tokens, role-based (user/admin) |
+|  i18n | KZ / RU / EN with runtime switching |
+|  Theme | Light / Dark mode with CSS variables |
+|  Responsive | Mobile-first, fully adaptive |
+|  Animated BG | Particle canvas, gradient orbs, parallax effects |
+|  CRUD | Projects, Blog, Certificates, Skills, Experience, Education |
+|  Analytics | Dashboard with views, top content, message stats |
+|  Contact Form | DB-stored messages with admin inbox |
+|  File Uploads | Avatar, project covers, certificate images |
+|  Search & Filter | Full-text search, category/status filters, pagination |
+|  Security | Helmet, CORS, rate limiting, bcrypt, validation |
 
 ## 📁 Project Structure
 
