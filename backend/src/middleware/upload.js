@@ -2,13 +2,14 @@ import multer from 'multer';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { mkdirSync } from 'fs';
+import { UPLOADS_DIR } from '../config/paths.js';
 
 const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif', 'application/pdf'];
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const type = req.uploadType || 'misc';
-    const dir = `./uploads/${type}`;
+    const dir = path.join(UPLOADS_DIR, type);
     try { mkdirSync(dir, { recursive: true }); } catch {}
     cb(null, dir);
   },

@@ -1,8 +1,6 @@
 import pg from 'pg';
 import bcrypt from 'bcryptjs';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { getPgConfig } from './getPgConfig.js';
 
 const { Pool } = pg;
 
@@ -247,13 +245,7 @@ Design systems work when they balance consistency, flexibility, and maintenance 
 ];
 
 async function seedDb() {
-  const pool = new Pool({
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '5432', 10),
-    database: process.env.DB_NAME || 'portfolio_db',
-    user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || '',
-  });
+  const pool = new Pool(getPgConfig());
 
   const client = await pool.connect();
 
