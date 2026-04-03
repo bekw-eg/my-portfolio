@@ -22,6 +22,8 @@ import DashboardBuilderPage from './pages/DashboardBuilderPage.jsx';
 import OnboardingPage from './pages/dashboard/OnboardingPage.jsx';
 import DashboardPage from './pages/admin/DashboardPage.jsx';
 import AdminProjectsPage from './pages/admin/AdminProjectsPage.jsx';
+import AdminExperiencePage from './pages/admin/AdminExperiencePage.jsx';
+import AdminEducationPage from './pages/admin/AdminEducationPage.jsx';
 import AdminBlogPage from './pages/admin/AdminBlogPage.jsx';
 import AdminCertificatesPage from './pages/admin/AdminCertificatesPage.jsx';
 import AdminContactsPage from './pages/admin/AdminContactsPage.jsx';
@@ -88,6 +90,8 @@ function AppRoutes() {
       }>
         <Route index element={<DashboardPage />} />
         <Route path="projects" element={<AdminProjectsPage />} />
+        <Route path="experience" element={<AdminExperiencePage />} />
+        <Route path="education" element={<AdminEducationPage />} />
         <Route path="blog" element={<AdminBlogPage />} />
         <Route path="certificates" element={<AdminCertificatesPage />} />
         <Route path="contacts" element={<AdminContactsPage />} />
