@@ -1,10 +1,13 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { translations } from '../i18n/translations.js';
-import { translationOverrides } from '../i18n/translationOverrides.js';
+import { translations as rawTranslations } from '../i18n/translations.js';
+import { translationOverrides as rawTranslationOverrides } from '../i18n/translationOverrides.js';
+import { normalizeMojibakeDeep } from '../i18n/normalizeMojibake.js';
 import api from '../services/api.js';
 
 const AppContext = createContext(null);
 const htmlLangMap = { kz: 'kk', ru: 'ru', en: 'en' };
+const translations = normalizeMojibakeDeep(rawTranslations);
+const translationOverrides = normalizeMojibakeDeep(rawTranslationOverrides);
 
 const getNestedValue = (source, lang, path) => {
   const keys = path.split('.');

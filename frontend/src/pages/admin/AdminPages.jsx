@@ -9,7 +9,7 @@ import {
   Plus,
   Trash2,
   Zap,
-} from 'lucide-react';
+} from 'heroicons';
 import toast from 'react-hot-toast';
 import { useApp } from '../../context/AppContext.jsx';
 import { getAdminText } from '../../i18n/adminCopy.js';

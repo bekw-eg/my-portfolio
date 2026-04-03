@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { Mail, Lock, Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ArrowLeft } from 'heroicons';
 import toast from 'react-hot-toast';
 
 export default function LoginPage() {
@@ -123,10 +123,6 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Demo hint */}
-          <div style={{ marginTop: '1rem', padding: '0.75rem 1rem', borderRadius: 10, background: 'rgba(37,99,235,0.06)', border: '1px solid rgba(37,99,235,0.12)', fontSize: '0.8rem', color: 'var(--color-text-3)' }}>
-            <span style={{ color: 'var(--color-primary)', fontWeight: 700 }}>{t('auth.demo_hint')}</span>
-          </div>
         </div>
       </div>
     </div>

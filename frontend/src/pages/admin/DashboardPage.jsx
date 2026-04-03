@@ -8,7 +8,7 @@ import {
   FolderOpen,
   Mail,
   TrendingUp,
-} from 'lucide-react';
+} from 'heroicons';
 import { useApp } from '../../context/AppContext.jsx';
 import { getAdminText } from '../../i18n/adminCopy.js';
 import api from '../../services/api.js';

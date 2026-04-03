@@ -23,7 +23,7 @@ import {
   Star,
   Tag,
   User,
-} from 'lucide-react';
+} from 'heroicons';
 import LanguageSwitcher from '../components/ui/LanguageSwitcher.jsx';
 import { publicPortfolioCopy } from '../i18n/publicPortfolioCopy.js';
 import api from '../services/api.js';

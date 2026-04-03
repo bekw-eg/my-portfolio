@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { ArrowLeft, Clock, Eye, Tag, Calendar, BookOpen } from 'lucide-react';
+import { ArrowLeft, Clock, Eye, Tag, Calendar, BookOpen } from 'heroicons';
 import { formatDate } from '../utils/format.js';
 import api from '../services/api.js';
 import ReactMarkdown from 'react-markdown';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext.jsx';
-import { Mail, Send, MapPin, Phone, Github, Instagram, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Send, MapPin, Phone, Github, Instagram, CheckCircle, AlertCircle } from 'heroicons';
 import api from '../services/api.js';
 import toast from 'react-hot-toast';
 

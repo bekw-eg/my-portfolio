@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
 import api from '../services/api.js';
-import { Download, MapPin, Phone, Globe, Github, Instagram, Send, Briefcase, GraduationCap, Award } from 'lucide-react';
+import { Download, MapPin, Phone, Globe, Github, Instagram, Send, Briefcase, GraduationCap, Award } from 'heroicons';
 
 export function AboutPage() {
   const { t, lang } = useApp();
@@ -372,7 +372,7 @@ export function EducationPage() {
 // ============================================================
 // CERTIFICATES PAGE
 // ============================================================
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'heroicons';
 
 export function CertificatesPage() {
   const { t, lang } = useApp();

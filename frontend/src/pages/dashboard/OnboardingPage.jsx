@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, Sparkles, User } from 'lucide-react';
+import { CheckCircle, Sparkles, User } from 'heroicons';
 import toast from 'react-hot-toast';
 import api from '../../services/api.js';
 import Icon from '../../components/ui/Icon.jsx';

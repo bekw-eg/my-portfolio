@@ -17,7 +17,7 @@ import {
   Sun,
   User,
   Zap,
-} from 'lucide-react';
+} from 'heroicons';
 import { useApp } from '../../context/AppContext.jsx';
 import { getAdminText } from '../../i18n/adminCopy.js';
 import BrandLogo from '../ui/BrandLogo.jsx';

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { Search, Clock, Eye, Tag, BookOpen, Star, ArrowRight } from 'lucide-react';
+import { Search, Clock, Eye, Tag, BookOpen, Star, ArrowRight } from 'heroicons';
 import { formatDate } from '../utils/format.js';
 import api from '../services/api.js';
 

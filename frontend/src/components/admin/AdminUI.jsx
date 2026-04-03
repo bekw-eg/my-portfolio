@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
-import { Search } from 'lucide-react';
+import { Search } from 'heroicons';
 
 export function AdminPageHeader({
   eyebrow = 'Control center',

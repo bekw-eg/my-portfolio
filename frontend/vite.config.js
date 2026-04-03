@@ -14,7 +14,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': '/src',
-      'lucide-react': fileURLToPath(new URL('./src/lib/lucide-react.jsx', import.meta.url)),
+      'heroicons': fileURLToPath(new URL('./src/lib/heroicons.jsx', import.meta.url)),
     },
   },
 });

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { ArrowRight, ArrowDown, ExternalLink, Github, Star, Zap, Code2, Globe } from 'lucide-react';
+import { ArrowRight, ArrowDown, ExternalLink, Github, Star, Zap, Code2, Globe } from 'heroicons';
 import api from '../services/api.js';
 
 // ─── Animated Particle Background ─────────────────────────

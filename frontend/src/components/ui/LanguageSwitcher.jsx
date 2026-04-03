@@ -1,4 +1,4 @@
-import { Globe } from 'lucide-react';
+import { Globe } from 'heroicons';
 import { useApp } from '../../context/AppContext.jsx';
 
 const LANGS = [

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { Home, ArrowLeft } from 'lucide-react';
+import { Home, ArrowLeft } from 'heroicons';
 
 export default function NotFoundPage() {
   const { t } = useApp();

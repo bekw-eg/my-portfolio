@@ -1,3 +1,5 @@
+import { normalizeMojibakeDeep } from './normalizeMojibake.js';
+
 const ru = {
   'Performance and publishing': 'Публикация и аналитика',
   'Portfolio performance, publication queue, and incoming activity.': 'Статистика портфолио, очередь публикаций и входящая активность.',
@@ -643,7 +645,7 @@ const kz = {
   'Articles currently bringing the most attention.': 'Қазір ең көп назар аудартып жатқан мақалалар.',
 };
 
-const dictionaries = { en: {}, ru, kz };
+const dictionaries = normalizeMojibakeDeep({ en: {}, ru, kz });
 
 export function getAdminText(lang) {
   const dict = dictionaries[lang] || dictionaries.ru;

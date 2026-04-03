@@ -10,7 +10,7 @@ import {
   Settings,
   Sparkles,
   User,
-} from 'lucide-react';
+} from 'heroicons';
 import toast from 'react-hot-toast';
 import LanguageSwitcher from '../components/ui/LanguageSwitcher.jsx';
 import { dashboardBuilderCopy } from '../i18n/dashboardBuilderCopy.js';

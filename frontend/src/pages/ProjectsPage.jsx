@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { Search, ExternalLink, Github, Star, Filter, SlidersHorizontal, Code2, Eye } from 'lucide-react';
+import { Search, ExternalLink, Github, Star, Filter, SlidersHorizontal, Code2, Eye } from 'heroicons';
 import api from '../services/api.js';
 
 const CATEGORIES = [

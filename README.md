@@ -93,7 +93,7 @@ portfolio/
 - **PostgreSQL** v14+
 - **npm** or **yarn**
 
-## ⚙️ Setup Guide
+##  Setup Guide
 
 ### 1. Create PostgreSQL Database
 

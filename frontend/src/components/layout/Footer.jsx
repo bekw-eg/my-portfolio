@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Gamepad2, Github, Instagram, Send } from 'lucide-react';
+import { ArrowUpRight, Gamepad2, Github, Instagram, Send } from 'heroicons';
 import { useApp } from '../../context/AppContext.jsx';
 import BrandLogo from '../ui/BrandLogo.jsx';
 

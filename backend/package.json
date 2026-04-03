@@ -8,7 +8,8 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "db:init": "node src/config/initDb.js",
-    "db:seed": "node src/config/seedDb.js"
+    "db:seed": "node src/config/seedDb.js",
+    "db:create-admin": "node src/config/createAdmin.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
