@@ -115,39 +115,22 @@ function ExperienceForm({ item, onSave, onClose }) {
     setLoading(true);
 
     try {
-      const formData = new FormData();
-
-      Object.entries(form).forEach(([key, value]) => {
-        if (key === 'tech_stack') {
-          formData.append(
-            key,
-            JSON.stringify(
-              value
-                .split(',')
-                .map((entry) => entry.trim())
-                .filter(Boolean),
-            ),
-          );
-          return;
-        }
-
-        if (key === 'end_date' && form.is_current) {
-          formData.append(key, '');
-          return;
-        }
-
-        formData.append(key, String(value));
-      });
+      const payload = {
+        ...form,
+        end_date: form.is_current ? null : (form.end_date || null),
+        is_current: Boolean(form.is_current),
+        sort_order: Number(form.sort_order) || 0,
+        tech_stack: form.tech_stack
+          .split(',')
+          .map((entry) => entry.trim())
+          .filter(Boolean),
+      };
 
       if (item) {
-        await api.put(`/experience/${item.id}`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        await api.put(`/experience/${item.id}`, payload);
         toast.success(tx('Experience entry updated'));
       } else {
-        await api.post('/experience', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        await api.post('/experience', payload);
         toast.success(tx('Experience entry created'));
       }
 

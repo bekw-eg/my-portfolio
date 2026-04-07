@@ -109,26 +109,18 @@ function EducationForm({ item, onSave, onClose }) {
     setLoading(true);
 
     try {
-      const formData = new FormData();
-
-      Object.entries(form).forEach(([key, value]) => {
-        if (key === 'end_date' && form.is_current) {
-          formData.append(key, '');
-          return;
-        }
-
-        formData.append(key, String(value));
-      });
+      const payload = {
+        ...form,
+        end_date: form.is_current ? null : (form.end_date || null),
+        is_current: Boolean(form.is_current),
+        sort_order: Number(form.sort_order) || 0,
+      };
 
       if (item) {
-        await api.put(`/education/${item.id}`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        await api.put(`/education/${item.id}`, payload);
         toast.success(tx('Education entry updated'));
       } else {
-        await api.post('/education', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        await api.post('/education', payload);
         toast.success(tx('Education entry created'));
       }
 
