@@ -932,6 +932,46 @@ textarea.input-field { resize: vertical; min-height: 120px; }
   }
 }
 
+@media (max-width: 430px) {
+  .site-navbar__inner {
+    gap: 0.4rem;
+  }
+
+  .site-navbar__brand {
+    gap: 0.45rem;
+  }
+
+  .site-navbar__brand-title {
+    display: none;
+  }
+
+  .site-navbar__actions {
+    gap: 0.35rem;
+  }
+
+  .site-navbar__ghost-button,
+  .site-navbar__auth-link {
+    min-height: 38px;
+    border-radius: 12px;
+  }
+
+  .site-navbar__ghost-button {
+    padding: 0 0.58rem;
+    font-size: 0.78rem;
+  }
+
+  .site-navbar__icon-button,
+  .site-navbar__menu-toggle {
+    width: 38px;
+    min-height: 38px;
+  }
+
+  .site-navbar__auth-link {
+    padding: 0 0.72rem;
+    font-size: 0.8rem;
+  }
+}
+
 /* ============================================================
    LOADING SPINNER
    ============================================================ */
@@ -1362,6 +1402,28 @@ textarea.input-field { resize: vertical; min-height: 120px; }
 .admin-topbar__menu.admin-icon-button,
 .admin-sidebar__close.admin-icon-button {
   display: none;
+}
+
+.admin-topbar__menu.admin-icon-button {
+  width: 35px;
+  height: 35px;
+  border-radius: 20px;
+}
+
+.admin-menu-burger {
+  width: 14px;
+  height: 10px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.admin-menu-burger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
 }
 
 .admin-topbar__context {

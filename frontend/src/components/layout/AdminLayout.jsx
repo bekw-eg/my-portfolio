@@ -7,7 +7,6 @@ import {
   Briefcase,
   CheckCircle,
   ChevronDown,
-  Filter,
   FolderOpen,
   Globe,
   GraduationCap,
@@ -239,7 +238,11 @@ export default function AdminLayout() {
               onClick={() => setSidebarOpen(true)}
               aria-label={tx('Open navigation')}
             >
-              <Filter size={18} />
+              <span className="admin-menu-burger" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
             </button>
 
             <div className="admin-topbar__context">
