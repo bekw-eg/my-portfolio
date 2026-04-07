@@ -120,8 +120,8 @@ export const translations = {
       want_work: 'Өзім үшін жұмыс',
       activity_required: 'Кемінде бір нұсқаны таңдаңыз (оқу немесе жұмыс)',
       years_experience: 'Тәжірибе (жыл)',
-      email_placeholder: 'berdibek@gmail.com.com',
-      demo_hint: 'Демо: berdibek@gmail.com.com / Admin@123456',
+      email_placeholder: 'berdibek@gmail.com',
+      demo_hint: 'Демо: berdibek@gmail.com / Admin@123456',
     },
     dashboard: {
       title: 'Басқару панелі', overview: 'Шолу',
@@ -315,8 +315,8 @@ export const translations = {
       want_work: 'Работа для себя',
       activity_required: 'Выберите хотя бы один вариант (учёба или работа)',
       years_experience: 'Опыт (лет)',
-      email_placeholder: 'berdibek@gmail.com.com',
-      demo_hint: 'Демо: berdibek@gmail.com.com / Admin@123456',
+      email_placeholder: 'berdibek@gmail.com',
+      demo_hint: 'Демо: berdibek@gmail.com / Admin@123456',
     },
     dashboard: {
       title: 'Панель управления', overview: 'Обзор',
@@ -510,8 +510,8 @@ export const translations = {
       want_work: 'Work for yourself',
       activity_required: 'Select at least one option (study or work)',
       years_experience: 'Experience (years)',
-      email_placeholder: 'berdibek@gmail.com.com',
-      demo_hint: 'Demo: berdibek@gmail.com.com / Admin@123456',
+      email_placeholder: 'berdibek@gmail.com',
+      demo_hint: 'Demo: berdibek@gmail.com / Admin@123456',
     },
     dashboard: {
       title: 'Dashboard', overview: 'Overview',
