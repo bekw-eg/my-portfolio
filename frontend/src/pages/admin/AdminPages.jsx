@@ -1631,7 +1631,7 @@ export function AdminProfilePage() {
               <span>
                 <span className="admin-checkbox__label">{tx('Available for work')}</span>
                 <span className="admin-checkbox__description">
-                  {tx('This state is reflected in public call-to-action sections.')}
+                  {tx(' This state is reflected in public call-to-action sections.')}
                 </span>
               </span>
             </label>
