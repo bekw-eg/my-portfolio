@@ -1,28 +1,40 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext.jsx';
 import Icon from '../ui/Icon.jsx';
 import BrandLogo from '../ui/BrandLogo.jsx';
 
-const NAVBAR_INTERACTIONS_ENABLED = true;
-
 const NAV_ITEMS = [
-  { key: 'home',         path: '/',             icon: 'dashboard' },
-  { key: 'about',        path: '/about',         icon: 'user' },
-  { key: 'projects',     path: '/projects',      icon: 'dashboard' },
-  { key: 'skills',       path: '/skills',        icon: 'dashboard' },
-  { key: 'experience',   path: '/experience',    icon: 'dashboard' },
-  { key: 'education',    path: '/education',     icon: 'dashboard' },
-  { key: 'certificates', path: '/certificates',  icon: 'dashboard' },
-  { key: 'blog',         path: '/blog',          icon: 'dashboard' },
-  { key: 'contact',      path: '/contact',       icon: 'mail' },
+  { key: 'home', path: '/' },
+  { key: 'about', path: '/about' },
+  { key: 'projects', path: '/projects' },
+  { key: 'skills', path: '/skills' },
+  { key: 'experience', path: '/experience' },
+  { key: 'education', path: '/education' },
+  { key: 'certificates', path: '/certificates' },
+  { key: 'blog', path: '/blog' },
+  { key: 'contact', path: '/contact' },
 ];
 
 const LANGS = [
   { code: 'kz', label: 'KZ' },
   { code: 'ru', label: 'RU' },
-  { code: 'en', label: 'ENG' },
+  { code: 'en', label: 'EN' },
 ];
+
+const ACTIVE_LABELS = {
+  kz: 'Белсенді',
+  ru: 'Активно',
+  en: 'Active',
+};
+
+function getNavLinkClassName({ isActive }) {
+  return `site-navbar__link ${isActive ? 'is-active' : ''}`;
+}
+
+function getMobileNavLinkClassName({ isActive }) {
+  return `site-navbar__mobile-link ${isActive ? 'is-active' : ''}`;
+}
 
 export default function Navbar() {
   const { theme, toggleTheme, lang, changeLang, t, user, isSuperAdmin, isBuilder, logout } = useApp();
@@ -31,230 +43,219 @@ export default function Navbar() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const userMenuRef = useRef(null);
   const langMenuRef = useRef(null);
 
+  const displayName = user?.profile?.full_name?.split(' ')[0] || user?.email?.split('@')[0] || '';
+  const activeLangLabel = LANGS.find((item) => item.code === lang)?.label || 'KZ';
+
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
+    const handleScroll = () => setScrolled(window.scrollY > 16);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    const handler = (e) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) setUserMenuOpen(false);
-      if (langMenuRef.current && !langMenuRef.current.contains(e.target)) setLangMenuOpen(false);
+    setMobileOpen(false);
+    setUserMenuOpen(false);
+    setLangMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handlePointerDown = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setUserMenuOpen(false);
+      }
+
+      if (langMenuRef.current && !langMenuRef.current.contains(event.target)) {
+        setLangMenuOpen(false);
+      }
     };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setMobileOpen(false);
+        setUserMenuOpen(false);
+        setLangMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = mobileOpen ? 'hidden' : previousOverflow || '';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1100) {
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleLogout = async () => {
     await logout();
+    setMobileOpen(false);
     setUserMenuOpen(false);
     navigate('/');
   };
 
-  const blockNavbarAction = (event) => {
-    if (!NAVBAR_INTERACTIONS_ENABLED) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  const handleLanguageChange = (code) => {
+    changeLang(code);
+    setLangMenuOpen(false);
   };
 
-  const getInteractiveProps = (handler) => {
-    if (!NAVBAR_INTERACTIONS_ENABLED) {
-      return {
-        onClick: blockNavbarAction,
-        'aria-disabled': true,
-        tabIndex: -1,
-      };
-    }
-
-    return { onClick: handler };
+  const toggleMobileMenu = () => {
+    setMobileOpen((current) => !current);
+    setUserMenuOpen(false);
+    setLangMenuOpen(false);
   };
 
   return (
     <>
-      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-        <div className="container-app h-full flex items-center justify-between">
-          {/* Logo */}
-          <Link
-            to="/"
-            className="flex items-center gap-2 group"
-            {...getInteractiveProps()}
-          >
+      <nav className={`navbar ${scrolled || mobileOpen ? 'scrolled' : ''}`}>
+        <div className="container-app site-navbar__inner">
+          <Link to="/" className="site-navbar__brand" aria-label="Bekw.dev home">
             <BrandLogo
-              size={36}
+              size={38}
               alt="Bekw logo"
-              className="group-hover:scale-110"
+              className="site-navbar__brand-mark"
               style={{
-                filter: 'drop-shadow(0 6px 18px rgba(10,102,255,0.28))',
-                transition: 'transform 0.2s ease, filter 0.2s ease',
+                filter: 'drop-shadow(0 6px 18px rgba(10, 102, 255, 0.22))',
               }}
             />
-            <span style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--color-text)', letterSpacing: '-0.02em' }}>
-              Bekw<span style={{ color: 'var(--color-primary)' }}>.</span>dev
+            <span className="site-navbar__brand-copy">
+              <span className="site-navbar__brand-title">
+                Bekw<span className="site-navbar__brand-dot">.</span>dev
+              </span>
             </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="site-navbar__links" aria-label="Primary">
             {NAV_ITEMS.map(({ key, path }) => (
               <NavLink
                 key={path}
                 to={path}
                 end={path === '/'}
-                {...getInteractiveProps()}
-                style={({ isActive }) => ({
-                  padding: '0.45rem 0.85rem',
-                  borderRadius: 8,
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  color: isActive ? 'var(--color-primary)' : 'var(--color-text-2)',
-                  background: isActive ? 'rgba(37,99,235,0.08)' : 'transparent',
-                  transition: 'all 0.2s',
-                  textDecoration: 'none',
-                })}
-                className="hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-950"
+                className={getNavLinkClassName}
               >
                 {t(`nav.${key}`)}
               </NavLink>
             ))}
           </div>
 
-          {/* Controls */}
-          <div className="flex items-center gap-2">
-            {/* Language switcher */}
-            <div ref={langMenuRef} style={{ position: 'relative' }}>
+          <div className="site-navbar__actions">
+            <div ref={langMenuRef} className="site-navbar__dropdown">
               <button
-                {...getInteractiveProps(() => setLangMenuOpen(o => !o))}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 4,
-                  padding: '0.45rem 0.75rem', borderRadius: 8,
-                  border: '1px solid var(--color-border)',
-                  background: 'var(--color-surface)',
-                  color: 'var(--color-text-2)',
-                  fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer',
-                  transition: 'all 0.2s',
+                type="button"
+                className="site-navbar__ghost-button"
+                onClick={() => {
+                  setLangMenuOpen((current) => !current);
+                  setUserMenuOpen(false);
                 }}
+                aria-expanded={langMenuOpen}
+                aria-label="Change language"
               >
-                <Icon name="globe" size={14} />
-                {LANGS.find(l => l.code === lang)?.label}
-                <span style={{ marginLeft: 2, opacity: 0.9 }}>▾</span>
+                <Icon name="globe" size={15} />
+                <span>{activeLangLabel}</span>
+                <span className="site-navbar__caret">{langMenuOpen ? '^' : 'v'}</span>
               </button>
+
               {langMenuOpen && (
-                <div style={{
-                  position: 'absolute', top: 'calc(100% + 8px)', right: 0,
-                  background: 'var(--color-surface)', border: '1px solid var(--color-border)',
-                  borderRadius: 12, padding: 6, minWidth: 100, zIndex: 200,
-                  boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
-                }}>
-                  {LANGS.map(l => (
+                <div className="site-navbar__dropdown-menu site-navbar__dropdown-menu--compact">
+                  {LANGS.map((item) => (
                     <button
-                      key={l.code}
-                      {...getInteractiveProps(() => { changeLang(l.code); setLangMenuOpen(false); })}
-                      style={{
-                        display: 'block', width: '100%', textAlign: 'left',
-                        padding: '0.5rem 0.75rem', borderRadius: 8,
-                        fontSize: '0.85rem', fontWeight: lang === l.code ? 700 : 500,
-                        color: lang === l.code ? 'var(--color-primary)' : 'var(--color-text-2)',
-                        background: lang === l.code ? 'rgba(37,99,235,0.08)' : 'transparent',
-                        border: 'none', cursor: 'pointer', transition: 'all 0.15s',
-                      }}
+                      key={item.code}
+                      type="button"
+                      className={`site-navbar__dropdown-item ${lang === item.code ? 'is-active' : ''}`}
+                      onClick={() => handleLanguageChange(item.code)}
                     >
-                      {l.label}
+                      <span>{item.label}</span>
+                      {lang === item.code && <span>{ACTIVE_LABELS[lang] || ACTIVE_LABELS.en}</span>}
                     </button>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* Theme toggle */}
             <button
-              {...getInteractiveProps(toggleTheme)}
-              style={{
-                width: 38, height: 38, borderRadius: 10,
-                border: '1px solid var(--color-border)',
-                background: 'var(--color-surface)',
-                color: 'var(--color-text-2)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                cursor: 'pointer', transition: 'all 0.2s',
-              }}
-              className="hover:border-primary-400 hover:text-primary-500"
+              type="button"
+              className="site-navbar__icon-button"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Icon name="sun" size={16} /> : <Icon name="moon" size={16} />}
+              {theme === 'dark' ? <Icon name="sun" size={17} /> : <Icon name="moon" size={17} />}
             </button>
 
-            {/* User menu */}
             {user ? (
-              <div ref={userMenuRef} style={{ position: 'relative' }}>
+              <div ref={userMenuRef} className="site-navbar__dropdown">
                 <button
-                  {...getInteractiveProps(() => setUserMenuOpen(o => !o))}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: 8,
-                    padding: '0.45rem 0.9rem', borderRadius: 10,
-                    background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))',
-                    color: 'white', border: 'none', cursor: 'pointer',
-                    fontSize: '0.875rem', fontWeight: 600, transition: 'all 0.2s',
-                    boxShadow: '0 4px 16px rgba(37,99,235,0.3)',
+                  type="button"
+                  className="site-navbar__profile-button"
+                  onClick={() => {
+                    setUserMenuOpen((current) => !current);
+                    setLangMenuOpen(false);
                   }}
+                  aria-expanded={userMenuOpen}
                 >
-                  <Icon name="user" size={16} color="white" />
-                  {user.profile?.full_name?.split(' ')[0] || user.email.split('@')[0]}
-                  <span style={{ opacity: 0.9, fontSize: 12 }}>▾</span>
+                  <span className="site-navbar__profile-icon">
+                    <Icon name="user" size={15} color="white" />
+                  </span>
+                  <span className="site-navbar__profile-name">{displayName}</span>
+                  <span className="site-navbar__caret">{userMenuOpen ? '^' : 'v'}</span>
                 </button>
+
                 {userMenuOpen && (
-                  <div style={{
-                    position: 'absolute', top: 'calc(100% + 8px)', right: 0,
-                    background: 'var(--color-surface)', border: '1px solid var(--color-border)',
-                    borderRadius: 12, padding: 6, minWidth: 160, zIndex: 200,
-                    boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
-                  }}>
+                  <div className="site-navbar__dropdown-menu">
+                    <div className="site-navbar__menu-meta">
+                      <div className="site-navbar__menu-name">{user?.profile?.full_name || displayName}</div>
+                      <div className="site-navbar__menu-email">{user?.email}</div>
+                    </div>
+
                     {isSuperAdmin && (
                       <Link
                         to="/admin"
-                        {...getInteractiveProps(() => setUserMenuOpen(false))}
-                        style={{
-                          display: 'flex', alignItems: 'center', gap: 8,
-                          padding: '0.6rem 0.85rem', borderRadius: 8,
-                          fontSize: '0.875rem', fontWeight: 500,
-                          color: 'var(--color-text-2)', textDecoration: 'none',
-                          transition: 'all 0.15s',
-                        }}
-                        className="hover:bg-primary-50 hover:text-primary-600 dark:hover:bg-primary-950"
+                        className="site-navbar__menu-link"
+                        onClick={() => setUserMenuOpen(false)}
                       >
                         <Icon name="dashboard" size={16} />
                         {t('nav.dashboard')}
                       </Link>
                     )}
+
                     {isBuilder && (
                       <Link
                         to="/dashboard"
-                        {...getInteractiveProps(() => setUserMenuOpen(false))}
-                        style={{
-                          display: 'flex', alignItems: 'center', gap: 8,
-                          padding: '0.6rem 0.85rem', borderRadius: 8,
-                          fontSize: '0.875rem', fontWeight: 500,
-                          color: 'var(--color-text-2)', textDecoration: 'none',
-                          transition: 'all 0.15s',
-                        }}
-                        className="hover:bg-primary-50 hover:text-primary-600 dark:hover:bg-primary-950"
+                        className="site-navbar__menu-link"
+                        onClick={() => setUserMenuOpen(false)}
                       >
                         <Icon name="dashboard" size={16} />
                         {t('nav.builder_dashboard')}
                       </Link>
                     )}
+
                     <button
-                      {...getInteractiveProps(handleLogout)}
-                      style={{
-                        display: 'flex', alignItems: 'center', gap: 8,
-                        width: '100%', textAlign: 'left',
-                        padding: '0.6rem 0.85rem', borderRadius: 8,
-                        fontSize: '0.875rem', fontWeight: 500,
-                        color: '#ef4444', background: 'transparent',
-                        border: 'none', cursor: 'pointer', transition: 'all 0.15s',
-                      }}
+                      type="button"
+                      className="site-navbar__menu-link site-navbar__menu-link--danger"
+                      onClick={handleLogout}
                     >
                       <Icon name="logout" size={16} />
                       {t('nav.logout')}
@@ -263,27 +264,17 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <Link
-                to="/login"
-                className="btn btn-primary btn-sm"
-                {...getInteractiveProps()}
-              >
+              <Link to="/login" className="site-navbar__auth-link">
                 {t('nav.login')}
               </Link>
             )}
 
-            {/* Mobile menu toggle */}
             <button
-              {...getInteractiveProps(() => setMobileOpen(o => !o))}
-              className="lg:hidden"
-              style={{
-                width: 38, height: 38, borderRadius: 10,
-                border: '1px solid var(--color-border)',
-                background: 'var(--color-surface)',
-                color: 'var(--color-text-2)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                cursor: 'pointer',
-              }}
+              type="button"
+              className="site-navbar__menu-toggle"
+              onClick={toggleMobileMenu}
+              aria-expanded={mobileOpen}
+              aria-label={mobileOpen ? 'Close navigation' : 'Open navigation'}
             >
               {mobileOpen ? <Icon name="close" size={18} /> : <Icon name="menu" size={18} />}
             </button>
@@ -291,34 +282,96 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
       {mobileOpen && (
-        <div style={{
-          position: 'fixed', top: 'var(--nav-height)', left: 0, right: 0, bottom: 0,
-          background: 'var(--color-bg)', zIndex: 99,
-          padding: '1.5rem', overflowY: 'auto',
-        }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            {NAV_ITEMS.map(({ key, path, icon }) => (
-              <NavLink
-                key={path}
-                to={path}
-                end={path === '/'}
-                {...getInteractiveProps(() => setMobileOpen(false))}
-                style={({ isActive }) => ({
-                  display: 'flex', alignItems: 'center', gap: 12,
-                  padding: '0.875rem 1rem', borderRadius: 12,
-                  fontSize: '1rem', fontWeight: 500, textDecoration: 'none',
-                  color: isActive ? 'var(--color-primary)' : 'var(--color-text)',
-                  background: isActive ? 'rgba(37,99,235,0.08)' : 'transparent',
-                })}
-              >
-                <Icon name={icon} size={18} />
-                {t(`nav.${key}`)}
-              </NavLink>
-            ))}
+        <>
+          <button
+            type="button"
+            className="site-navbar__backdrop"
+            onClick={() => setMobileOpen(false)}
+            aria-label="Close navigation backdrop"
+          />
+
+          <div className="site-navbar__mobile">
+            <div className="site-navbar__mobile-nav">
+              {NAV_ITEMS.map(({ key, path }) => (
+                <NavLink
+                  key={path}
+                  to={path}
+                  end={path === '/'}
+                  className={getMobileNavLinkClassName}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <span>{t(`nav.${key}`)}</span>
+                  <Icon name="arrowRight" size={16} />
+                </NavLink>
+              ))}
+            </div>
+
+            <div className="site-navbar__mobile-tools">
+              <div className="site-navbar__mobile-lang">
+                {LANGS.map((item) => (
+                  <button
+                    key={item.code}
+                    type="button"
+                    className={`site-navbar__mobile-chip ${lang === item.code ? 'is-active' : ''}`}
+                    onClick={() => handleLanguageChange(item.code)}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+
+              {user ? (
+                <div className="site-navbar__mobile-account">
+                  <div className="site-navbar__mobile-account-copy">
+                    <div className="site-navbar__mobile-account-name">
+                      {user?.profile?.full_name || displayName}
+                    </div>
+                    <div className="site-navbar__mobile-account-email">{user?.email}</div>
+                  </div>
+
+                  <div className="site-navbar__mobile-account-actions">
+                    {isSuperAdmin && (
+                      <Link
+                        to="/admin"
+                        className="site-navbar__mobile-action"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {t('nav.dashboard')}
+                      </Link>
+                    )}
+
+                    {isBuilder && (
+                      <Link
+                        to="/dashboard"
+                        className="site-navbar__mobile-action"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {t('nav.builder_dashboard')}
+                      </Link>
+                    )}
+
+                    <button
+                      type="button"
+                      className="site-navbar__mobile-action site-navbar__mobile-action--danger"
+                      onClick={handleLogout}
+                    >
+                      {t('nav.logout')}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  className="site-navbar__mobile-login"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t('nav.login')}
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
