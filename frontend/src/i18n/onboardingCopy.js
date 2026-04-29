@@ -2,9 +2,9 @@ export const onboardingCopy = {
   kz: {
     stepWord: 'Қадам',
     heroEyebrow: 'Баптау ағыны',
-    heroTitleLead: 'Бетті',
-    heroTitleEmphasis: 'саналы',
-    heroTitleTail: 'түрде жинаңыз',
+    heroTitleLead: 'Портфолионы',
+    heroTitleEmphasis: 'қадамдап',
+    heroTitleTail: 'жинаңыз',
     heroDescription:
       'Мұндағы әр қадам жеке жария портфолионы өз құрылымыңызбен және контентіңізбен толтырады. Мақсат - автоматты емес, әдейі жасалғандай сезілетін бет құру.',
     languageLabel: 'Тіл',
@@ -214,8 +214,8 @@ export const onboardingCopy = {
   ru: {
     stepWord: 'Шаг',
     heroEyebrow: 'Поток настройки',
-    heroTitleLead: 'Соберите страницу',
-    heroTitleEmphasis: 'осознанно',
+    heroTitleLead: 'Соберите портфолио',
+    heroTitleEmphasis: 'шаг за шагом',
     heroTitleTail: '',
     heroDescription:
       'Каждый шаг здесь наполняет личное публичное портфолио вашей структурой и вашим контентом. Цель - собрать страницу, которая ощущается не автоматической, а продуманной.',
@@ -426,8 +426,8 @@ export const onboardingCopy = {
   en: {
     stepWord: 'Step',
     heroEyebrow: 'Setup flow',
-    heroTitleLead: 'Build the page',
-    heroTitleEmphasis: 'intentionally',
+    heroTitleLead: 'Build your portfolio',
+    heroTitleEmphasis: 'step by step',
     heroTitleTail: '',
     heroDescription:
       'Each step here fills the personal public portfolio with your own structure and content. The goal is to build a page that feels deliberate rather than automatic.',

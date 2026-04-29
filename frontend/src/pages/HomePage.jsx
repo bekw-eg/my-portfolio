@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext.jsx';
-import { ArrowRight, ArrowDown, ExternalLink, Github, Star, Zap, Code2, Globe } from 'heroicons';
+import { ArrowRight, ArrowDown, ExternalLink, Github, Star, Sparkles, Code2, Globe } from 'heroicons';
 import api from '../services/api.js';
 
 // ─── Animated Particle Background ─────────────────────────
@@ -159,7 +159,439 @@ function StatItem({ value, label }) {
   );
 }
 
-// ─── Project Card Preview ──────────────────────────────────
+// ─── AI Assistant ───────────────────────────────────────────
+const assistantAnswerGroups = [
+  {
+    keywords: ['привет', 'здравствуй', 'здравствуйте', 'добрый день', 'добрый вечер', 'hello', 'hi', 'hey', 'салам', 'салем', 'сәлем', 'ассалаумагалейкум', 'ассаламу алейкум'],
+    answer: 'Привет! Я локальный ассистент этого портфолио. Могу рассказать про автора, проекты, навыки, опыт, образование, сертификаты и контакты.',
+  },
+  {
+    keywords: ['как дела', 'как ты', 'как жизнь', 'как настроение', 'как поживаешь', 'что нового', 'how are you', 'калайсын', 'қалайсың', 'қалың қалай'],
+    answer: 'Все отлично, я на месте и готов помочь по портфолио. Спроси, например: "какие проекты есть?", "какой стек?", "как связаться?" или "какой опыт?".',
+  },
+  {
+    keywords: ['спасибо', 'благодарю', 'рахмет', 'thank', 'thanks'],
+    answer: 'Пожалуйста! Если нужно, могу еще подсказать по проектам, навыкам, опыту или контактам.',
+  },
+  {
+    keywords: ['что умеешь', 'что ты умеешь', 'помощь', 'help', 'ассистент', 'assistant', 'что спросить', 'как пользоваться', 'команды'],
+    answer: 'Я отвечаю на вопросы по этому портфолио: кто автор, какие есть проекты, какие навыки и стек, какой опыт, где образование и сертификаты, как связаться или заказать работу.',
+  },
+  {
+    keywords: ['кто', 'автор', 'egeubay', 'егеубай', 'berdibek', 'бердибек', 'bekw', 'about', 'обо мне', 'о себе', 'разработчик', 'developer'],
+    answer: 'Это портфолио Egeubay Berdibek, Full Stack Developer. На сайте собраны его проекты, навыки, опыт, образование, сертификаты и способы связи.',
+  },
+  {
+    keywords: ['портфолио', 'сайт', 'главная', 'home', 'что это', 'о сайте', 'страница'],
+    answer: 'Это персональное портфолио разработчика. Главная страница показывает краткую информацию, статистику, кнопки Projects и Get in Touch, а ниже идут разделы с подробностями.',
+  },
+  {
+    keywords: ['проект', 'проекты', 'projects', 'работы', 'кейсы', 'кейс', 'portfolio', 'github', 'demo', 'репозиторий', 'ссылка на проект', 'какие проекты'],
+    answer: 'Проекты находятся в разделе Projects. Там можно посмотреть основные работы, описание, использованный стек и ссылки, если они указаны.',
+  },
+  {
+    keywords: ['лучший проект', 'главный проект', 'избранный', 'featured', 'самый сильный', 'что показать'],
+    answer: 'Лучше начать с раздела Projects и обратить внимание на отмеченные или самые подробно описанные работы. Они обычно лучше всего показывают уровень и стиль разработки.',
+  },
+  {
+    keywords: ['skill', 'skills', 'навык', 'навыки', 'стек', 'технологии', 'technology', 'stack', 'react', 'node', 'javascript', 'js', 'full stack'],
+    answer: 'Основной фокус портфолио: full stack разработка, frontend, backend и современные web-технологии. Подробный список лучше смотреть в разделе Skills.',
+  },
+  {
+    keywords: ['frontend', 'фронт', 'фронтенд', 'react', 'ui', 'интерфейс', 'верстка', 'vite'],
+    answer: 'По frontend часть портфолио показывает работу с современными интерфейсами, компонентами, адаптивной версткой и React-подходом.',
+  },
+  {
+    keywords: ['backend', 'бекенд', 'бэкенд', 'node', 'express', 'api', 'server', 'сервер', 'database', 'postgres', 'sql'],
+    answer: 'По backend можно ориентироваться на серверную разработку, API, работу с базой данных и связку frontend + backend в full stack проектах.',
+  },
+  {
+    keywords: ['опыт', 'experience', 'стаж', 'работал', 'years', 'лет опыта', 'сколько опыта'],
+    answer: 'Опыт показан на главном экране и в разделе Experience. Сейчас на главной указано 5+ years of experience.',
+  },
+  {
+    keywords: ['образование', 'education', 'учеба', 'учёба', 'университет', 'колледж', 'диплом'],
+    answer: 'Информация об образовании находится в разделе Education. Там можно посмотреть учебные данные, если они заполнены в портфолио.',
+  },
+  {
+    keywords: ['сертификат', 'сертификаты', 'certificate', 'certificates', 'курс', 'курсы'],
+    answer: 'Сертификаты можно посмотреть в разделе Certificates. Этот раздел показывает подтверждения обучения и дополнительных навыков.',
+  },
+  {
+    keywords: ['контакт', 'контакты', 'contact', 'связаться', 'связь', 'telegram', 'телеграм', 'email', 'почта', 'написать', 'заказать', 'нанять', 'hire', 'работа', 'сотрудничество'],
+    answer: 'Для связи открой раздел Contact или нажми кнопку Get in Touch на главном экране. Там удобнее всего оставить сообщение или найти контактные данные.',
+  },
+  {
+    keywords: ['цена', 'стоимость', 'сколько стоит', 'прайс', 'бюджет', 'заказ сайта', 'сделать сайт'],
+    answer: 'Стоимость зависит от задачи, сроков и объема работы. Лучше перейти в Contact и коротко описать проект, чтобы можно было обсудить детали.',
+  },
+  {
+    keywords: ['доступен', 'available', 'свободен', 'занят', 'работаешь', 'можно заказать', 'можно написать'],
+    answer: 'На главном экране указано "Available for work", значит можно написать по поводу проекта или сотрудничества через Contact.',
+  },
+  {
+    keywords: ['резюме', 'cv', 'resume', 'скачать', 'download'],
+    answer: 'Если резюме добавлено на сайт, его стоит искать рядом с блоком About или Contact. Еще можно написать через Contact и запросить актуальное CV напрямую.',
+  },
+  {
+    keywords: ['где найти', 'куда нажать', 'навигация', 'меню', 'раздел', 'разделы', 'about', 'contact', 'education', 'experience', 'certificates', 'blog'],
+    answer: 'Навигация находится сверху: Home, About, Projects, Skills, Experience, Education, Certificates, Blog и Contact. Нажми нужный раздел, чтобы быстро перейти к информации.',
+  },
+  {
+    keywords: ['язык', 'language', 'en', 'ru', 'kz', 'қазақша', 'english', 'русский'],
+    answer: 'Язык сайта можно переключить в верхней панели. Ассистент тоже подстраивает интерфейс под выбранный язык, но ответы по портфолио сейчас подготовлены в основном на русском.',
+  },
+];
+
+function getPreparedAssistantAnswer(question) {
+  const normalizedQuestion = question
+    .toLowerCase()
+    .replaceAll('ё', 'е')
+    .replaceAll('ә', 'а');
+
+  const matchedGroup = assistantAnswerGroups.find((group) => (
+    group.keywords.some((keyword) => normalizedQuestion.includes(keyword))
+  ));
+
+  if (matchedGroup) {
+    return matchedGroup.answer;
+  }
+
+  return 'Я лучше всего отвечаю на вопросы по этому портфолио. Можешь спросить про проекты, навыки, опыт, образование, сертификаты, контакты или сотрудничество.';
+}
+
+// AI Assistant Widget
+function AiAssistantWidget({ lang }) {
+  const messagesListRef = useRef(null);
+  const responseTimeoutRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
+  const [input, setInput] = useState('');
+  const [messages, setMessages] = useState([
+    { role: 'assistant', content: 'Привет! Я ИИ ассистент. Задайте вопрос, и я отвечу.' },
+  ]);
+
+  const copyByLang = {
+    kz: {
+      button: 'ИИ ассистент',
+      title: 'ИИ ассистент',
+      status: 'Сұрақтарға жауап береді',
+      placeholder: 'Сұрағыңызды жазыңыз...',
+      loading: 'Ойлануда...',
+      error: 'Жауап алу мүмкін болмады. Қайталап көріңіз.',
+      close: 'Жабу',
+      greeting: 'Сәлем! Мен ИИ ассистентпін. Сұрақ қойыңыз, мен жауап беремін.',
+    },
+    ru: {
+      button: 'ИИ ассистент',
+      title: 'ИИ ассистент',
+      status: 'Отвечает на вопросы',
+      placeholder: 'Напишите вопрос...',
+      loading: 'Думаю...',
+      error: 'Не удалось получить ответ. Попробуйте еще раз.',
+      close: 'Закрыть',
+      greeting: 'Привет! Я ИИ ассистент. Задайте вопрос, и я отвечу.',
+    },
+    en: {
+      button: 'AI assistant',
+      title: 'AI assistant',
+      status: 'Answers questions',
+      placeholder: 'Write a question...',
+      loading: 'Thinking...',
+      error: 'Could not get an answer. Please try again.',
+      close: 'Close',
+      greeting: 'Hi! I am an AI assistant. Ask a question and I will answer.',
+    },
+  };
+  const copy = copyByLang[lang] || copyByLang.en;
+
+  useEffect(() => {
+    if (responseTimeoutRef.current) {
+      clearTimeout(responseTimeoutRef.current);
+      responseTimeoutRef.current = null;
+    }
+    setIsThinking(false);
+    setMessages([{ role: 'assistant', content: copy.greeting }]);
+  }, [copy.greeting]);
+
+  useEffect(() => () => {
+    if (responseTimeoutRef.current) {
+      clearTimeout(responseTimeoutRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      const messageList = messagesListRef.current;
+      if (messageList) {
+        messageList.scrollTop = messageList.scrollHeight;
+      }
+    }
+  }, [isOpen, messages, isThinking]);
+
+  const openAssistant = () => {
+    setIsClosing(false);
+    setIsOpen(true);
+  };
+
+  const closeAssistant = () => {
+    setIsClosing(true);
+    setIsOpen(false);
+  };
+
+  const toggleAssistant = () => {
+    if (isOpen) {
+      closeAssistant();
+      return;
+    }
+
+    openAssistant();
+  };
+
+  const sendMessage = () => {
+
+    const question = input.trim();
+    if (!question || isThinking) return;
+
+    const nextMessages = [...messages, { role: 'user', content: question }];
+    setInput('');
+    setMessages(nextMessages);
+    setIsThinking(true);
+
+    const thinkingDelay = 2000 + Math.floor(Math.random() * 3001);
+    responseTimeoutRef.current = setTimeout(() => {
+      const answer = getPreparedAssistantAnswer(question);
+      setMessages([...nextMessages, { role: 'assistant', content: answer }]);
+      setIsThinking(false);
+      responseTimeoutRef.current = null;
+    }, thinkingDelay);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    sendMessage();
+  };
+
+  const handleInputKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      sendMessage();
+    }
+  };
+
+  const canSend = Boolean(input.trim()) && !isThinking;
+
+  return (
+    <div className="ai-assistant-widget" style={{
+      position: 'absolute',
+      right: 'clamp(1rem, 7vw, 7rem)',
+      bottom: 'clamp(1.4rem, 8vh, 4.5rem)',
+      zIndex: 30,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+      gap: '0.85rem',
+    }}>
+      {(isOpen || isClosing) && (
+        <div
+          className={`ai-assistant-panel ${isClosing ? 'is-closing' : 'is-open'}`}
+          onAnimationEnd={() => {
+            if (isClosing) {
+              setIsClosing(false);
+            }
+          }}
+          style={{
+          width: 'min(390px, calc(100vw - 2rem))',
+          borderRadius: 22,
+          background: 'rgba(255,255,255,0.92)',
+          border: '1px solid rgba(226,234,248,0.95)',
+          boxShadow: '0 24px 70px rgba(15,23,42,0.18)',
+          backdropFilter: 'blur(22px)',
+          overflow: 'hidden',
+        }}>
+          <div style={{
+            padding: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '0.75rem',
+            borderBottom: '1px solid var(--color-border)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', minWidth: 0 }}>
+              <div style={{
+                width: 38,
+                height: 38,
+                borderRadius: 13,
+                display: 'grid',
+                placeItems: 'center',
+                background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))',
+                color: 'white',
+                boxShadow: '0 10px 26px rgba(37,99,235,0.24)',
+                flex: '0 0 auto',
+              }}>
+                <Sparkles size={18} />
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontWeight: 800, color: 'var(--color-text)', lineHeight: 1.15 }}>{copy.title}</div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--color-text-3)' }}>{copy.status}</div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={closeAssistant}
+              aria-label={copy.close}
+              title={copy.close}
+              style={{
+                width: 34,
+                height: 34,
+                borderRadius: 12,
+                border: '1px solid var(--color-border)',
+                background: 'var(--color-surface)',
+                color: 'var(--color-text-2)',
+                cursor: 'pointer',
+                fontWeight: 800,
+              }}
+            >
+              x
+            </button>
+          </div>
+
+          <div ref={messagesListRef} style={{
+            maxHeight: 270,
+            overflowY: 'auto',
+            padding: '1rem',
+            display: 'grid',
+            gap: '0.75rem',
+          }}>
+            {messages.map((message, index) => (
+              <div
+                key={`${message.role}-${index}`}
+                className={`ai-assistant-message ${message.role === 'user' ? 'is-user' : 'is-assistant'}`}
+                style={{
+                  justifySelf: message.role === 'user' ? 'end' : 'start',
+                  maxWidth: '88%',
+                  padding: '0.72rem 0.85rem',
+                  borderRadius: message.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+                  background: message.role === 'user'
+                    ? 'linear-gradient(135deg, var(--color-primary), var(--color-accent))'
+                    : 'var(--color-surface-2)',
+                  color: message.role === 'user' ? 'white' : 'var(--color-text)',
+                  fontSize: '0.9rem',
+                  lineHeight: 1.55,
+                  whiteSpace: 'pre-wrap',
+                }}
+              >
+                {message.content}
+              </div>
+            ))}
+            {isThinking && (
+              <div
+                className="ai-assistant-typing"
+                style={{
+                  justifySelf: 'start',
+                  maxWidth: '88%',
+                  padding: '0.72rem 0.85rem',
+                  borderRadius: '16px 16px 16px 4px',
+                  background: 'var(--color-surface-2)',
+                  color: 'var(--color-text-2)',
+                  fontSize: '0.9rem',
+                  lineHeight: 1.55,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                }}
+              >
+                <span>{copy.loading}</span>
+                <span className="ai-assistant-typing-dots" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+              </div>
+            )}
+          </div>
+
+          <form onSubmit={handleSubmit} style={{
+            padding: '0.85rem',
+            display: 'flex',
+            gap: '0.6rem',
+            borderTop: '1px solid var(--color-border)',
+            background: 'rgba(248,250,255,0.88)',
+          }}>
+            <input
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={handleInputKeyDown}
+              placeholder={isThinking ? copy.loading : copy.placeholder}
+              maxLength={1200}
+              disabled={isThinking}
+              style={{
+                minWidth: 0,
+                flex: 1,
+                height: 44,
+                padding: '0 0.9rem',
+                borderRadius: 13,
+                border: '1px solid var(--color-border)',
+                background: 'white',
+                color: 'var(--color-text)',
+                outline: 'none',
+                font: 'inherit',
+                fontSize: '0.9rem',
+                cursor: isThinking ? 'wait' : 'text',
+              }}
+            />
+            <button
+              type="submit"
+              className="ai-assistant-send"
+              disabled={!canSend}
+              style={{
+                width: 44,
+                height: 44,
+                border: 'none',
+                borderRadius: 13,
+                display: 'grid',
+                placeItems: 'center',
+                background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))',
+                color: 'white',
+                cursor: !canSend ? 'not-allowed' : 'pointer',
+                opacity: !canSend ? 0.55 : 1,
+              }}
+            >
+              <ArrowRight size={17} />
+            </button>
+          </form>
+        </div>
+      )}
+
+      <button
+        type="button"
+        className="ai-assistant-trigger"
+        onClick={toggleAssistant}
+        style={{
+          minHeight: 56,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.6rem',
+          padding: '0 1rem',
+          border: 'none',
+          borderRadius: 18,
+          background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))',
+          color: 'white',
+          boxShadow: '0 16px 36px rgba(37,99,235,0.32)',
+          cursor: 'pointer',
+          fontWeight: 800,
+          fontSize: '0.92rem',
+        }}
+      >
+        <Sparkles size={18} />
+        {copy.button}
+      </button>
+    </div>
+  );
+}
+
+// Project Card Preview
 function ProjectCard({ project, lang, t }) {
   const title = project[`title_${lang}`] || project.title_en;
   const desc = project[`description_${lang}`] || project.description_en;
@@ -316,6 +748,8 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
+        <AiAssistantWidget lang={lang} />
 
         {/* Scroll indicator */}
         <div style={{
