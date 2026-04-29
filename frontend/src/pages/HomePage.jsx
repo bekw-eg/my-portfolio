@@ -163,101 +163,236 @@ function StatItem({ value, label }) {
 const assistantAnswerGroups = [
   {
     keywords: ['привет', 'здравствуй', 'здравствуйте', 'добрый день', 'добрый вечер', 'hello', 'hi', 'hey', 'салам', 'салем', 'сәлем', 'ассалаумагалейкум', 'ассаламу алейкум'],
-    answer: 'Привет! Я локальный ассистент этого портфолио. Могу рассказать про автора, проекты, навыки, опыт, образование, сертификаты и контакты.',
+    answers: {
+      ru: 'Привет! Я локальный ассистент этого портфолио. Могу рассказать про автора, проекты, навыки, опыт, образование, сертификаты и контакты.',
+      kz: 'Сәлем! Мен осы портфолионың локалды ассистентімін. Автор, жобалар, дағдылар, тәжірибе, білім, сертификаттар және байланыс туралы айтып бере аламын.',
+      en: 'Hi! I am the local assistant for this portfolio. I can tell you about the author, projects, skills, experience, education, certificates, and contacts.',
+    },
   },
   {
-    keywords: ['как дела', 'как ты', 'как жизнь', 'как настроение', 'как поживаешь', 'что нового', 'how are you', 'калайсын', 'қалайсың', 'қалың қалай'],
-    answer: 'Все отлично, я на месте и готов помочь по портфолио. Спроси, например: "какие проекты есть?", "какой стек?", "как связаться?" или "какой опыт?".',
+    keywords: ['как дела', 'как ты', 'как жизнь', 'как настроение', 'как поживаешь', 'что нового', 'how are you', 'how is it going', 'қалайсың', 'калайсын', 'қалың қалай', 'калың қалай', 'жағдай қалай'],
+    answers: {
+      ru: 'Все отлично, я на месте и готов помочь по портфолио. Спроси, например: "какие проекты есть?", "какой стек?", "как связаться?" или "какой опыт?".',
+      kz: 'Бәрі жақсы, мен осындамын және портфолио бойынша көмектесуге дайынмын. Мысалы: "қандай жобалар бар?", "қандай стек?", "қалай байланысуға болады?" деп сұрай аласыз.',
+      en: 'I am doing great and ready to help with this portfolio. You can ask: "what projects are here?", "what tech stack?", "how can I contact him?", or "what experience does he have?".',
+    },
   },
   {
-    keywords: ['спасибо', 'благодарю', 'рахмет', 'thank', 'thanks'],
-    answer: 'Пожалуйста! Если нужно, могу еще подсказать по проектам, навыкам, опыту или контактам.',
+    keywords: ['спасибо', 'благодарю', 'рахмет', 'thank', 'thanks', 'thank you'],
+    answers: {
+      ru: 'Пожалуйста! Если нужно, могу еще подсказать по проектам, навыкам, опыту или контактам.',
+      kz: 'Оқасы жоқ! Қажет болса, жобалар, дағдылар, тәжірибе немесе байланыс туралы тағы көмектесемін.',
+      en: 'You are welcome! I can also help with projects, skills, experience, or contact details.',
+    },
   },
   {
-    keywords: ['что умеешь', 'что ты умеешь', 'помощь', 'help', 'ассистент', 'assistant', 'что спросить', 'как пользоваться', 'команды'],
-    answer: 'Я отвечаю на вопросы по этому портфолио: кто автор, какие есть проекты, какие навыки и стек, какой опыт, где образование и сертификаты, как связаться или заказать работу.',
+    keywords: ['что умеешь', 'что ты умеешь', 'помощь', 'help', 'ассистент', 'assistant', 'что спросить', 'как пользоваться', 'команды', 'не істейсің', 'көмек', 'нені сұрасам болады'],
+    answers: {
+      ru: 'Я отвечаю на вопросы по этому портфолио: кто автор, какие есть проекты, какие навыки и стек, какой опыт, где образование и сертификаты, как связаться или заказать работу.',
+      kz: 'Мен осы портфолио бойынша жауап беремін: автор кім, қандай жобалар бар, қандай дағдылар мен стек, тәжірибе, білім, сертификаттар, байланыс және тапсырыс беру.',
+      en: 'I answer questions about this portfolio: the author, projects, skills, tech stack, experience, education, certificates, contacts, and collaboration.',
+    },
   },
   {
-    keywords: ['кто', 'автор', 'egeubay', 'егеубай', 'berdibek', 'бердибек', 'bekw', 'about', 'обо мне', 'о себе', 'разработчик', 'developer'],
-    answer: 'Это портфолио Egeubay Berdibek, Full Stack Developer. На сайте собраны его проекты, навыки, опыт, образование, сертификаты и способы связи.',
+    keywords: ['кто', 'автор', 'egeubay', 'егеубай', 'berdibek', 'бердибек', 'bekw', 'about', 'обо мне', 'о себе', 'разработчик', 'developer', 'кім', 'авторы', 'әзірлеуші'],
+    answers: {
+      ru: 'Это портфолио Egeubay Berdibek, Full Stack Developer. На сайте собраны его проекты, навыки, опыт, образование, сертификаты и способы связи.',
+      kz: 'Бұл Egeubay Berdibek атты Full Stack Developer портфолиосы. Сайтта оның жобалары, дағдылары, тәжірибесі, білімі, сертификаттары және байланыс тәсілдері көрсетілген.',
+      en: 'This is the portfolio of Egeubay Berdibek, a Full Stack Developer. The site includes his projects, skills, experience, education, certificates, and contact options.',
+    },
   },
   {
-    keywords: ['портфолио', 'сайт', 'главная', 'home', 'что это', 'о сайте', 'страница'],
-    answer: 'Это персональное портфолио разработчика. Главная страница показывает краткую информацию, статистику, кнопки Projects и Get in Touch, а ниже идут разделы с подробностями.',
+    keywords: ['портфолио', 'сайт', 'главная', 'home', 'что это', 'о сайте', 'страница', 'басты бет', 'сайт туралы', 'портфолио туралы'],
+    answers: {
+      ru: 'Это персональное портфолио разработчика. Главная страница показывает краткую информацию, статистику, кнопки Projects и Get in Touch, а ниже идут разделы с подробностями.',
+      kz: 'Бұл әзірлеушінің жеке портфолиосы. Басты бетте қысқаша ақпарат, статистика, Projects және Get in Touch батырмалары бар, ал төменде толық бөлімдер орналасқан.',
+      en: 'This is a personal developer portfolio. The home page shows a short intro, stats, Projects and Get in Touch buttons, and the detailed sections below.',
+    },
   },
   {
-    keywords: ['проект', 'проекты', 'projects', 'работы', 'кейсы', 'кейс', 'portfolio', 'github', 'demo', 'репозиторий', 'ссылка на проект', 'какие проекты'],
-    answer: 'Проекты находятся в разделе Projects. Там можно посмотреть основные работы, описание, использованный стек и ссылки, если они указаны.',
+    keywords: ['проект', 'проекты', 'projects', 'работы', 'кейсы', 'кейс', 'portfolio', 'github', 'demo', 'репозиторий', 'ссылка на проект', 'какие проекты', 'жоба', 'жобалар', 'қандай жобалар'],
+    answers: {
+      ru: 'Проекты находятся в разделе Projects. Там можно посмотреть основные работы, описание, использованный стек и ссылки, если они указаны.',
+      kz: 'Жобалар Projects бөлімінде орналасқан. Онда негізгі жұмыстарды, сипаттамасын, қолданылған технологияларды және бар болса сілтемелерді көруге болады.',
+      en: 'Projects are available in the Projects section. You can view the main work, descriptions, tech stack, and links if they are provided.',
+    },
   },
   {
-    keywords: ['лучший проект', 'главный проект', 'избранный', 'featured', 'самый сильный', 'что показать'],
-    answer: 'Лучше начать с раздела Projects и обратить внимание на отмеченные или самые подробно описанные работы. Они обычно лучше всего показывают уровень и стиль разработки.',
+    keywords: ['лучший проект', 'главный проект', 'избранный', 'featured', 'самый сильный', 'что показать', 'ең жақсы жоба', 'негізгі жоба'],
+    answers: {
+      ru: 'Лучше начать с раздела Projects и обратить внимание на отмеченные или самые подробно описанные работы. Они обычно лучше всего показывают уровень и стиль разработки.',
+      kz: 'Алдымен Projects бөлімінен бастап, белгіленген немесе толық сипатталған жобаларға қараған дұрыс. Олар деңгей мен жұмыс стилін жақсы көрсетеді.',
+      en: 'Start with the Projects section and look at featured or well-described work first. Those usually show the strongest level and development style.',
+    },
   },
   {
-    keywords: ['skill', 'skills', 'навык', 'навыки', 'стек', 'технологии', 'technology', 'stack', 'react', 'node', 'javascript', 'js', 'full stack'],
-    answer: 'Основной фокус портфолио: full stack разработка, frontend, backend и современные web-технологии. Подробный список лучше смотреть в разделе Skills.',
+    keywords: ['skill', 'skills', 'навык', 'навыки', 'стек', 'технологии', 'technology', 'stack', 'react', 'node', 'javascript', 'js', 'full stack', 'дағды', 'дағдылар', 'технология', 'технологиялар'],
+    answers: {
+      ru: 'Основной фокус портфолио: full stack разработка, frontend, backend и современные web-технологии. Подробный список лучше смотреть в разделе Skills.',
+      kz: 'Портфолионың негізгі бағыты: full stack әзірлеу, frontend, backend және заманауи web-технологиялар. Толық тізімді Skills бөлімінен көруге болады.',
+      en: 'The main focus is full stack development, frontend, backend, and modern web technologies. The detailed list is best viewed in the Skills section.',
+    },
   },
   {
-    keywords: ['frontend', 'фронт', 'фронтенд', 'react', 'ui', 'интерфейс', 'верстка', 'vite'],
-    answer: 'По frontend часть портфолио показывает работу с современными интерфейсами, компонентами, адаптивной версткой и React-подходом.',
+    keywords: ['frontend', 'фронт', 'фронтенд', 'react', 'ui', 'интерфейс', 'верстка', 'vite', 'алдыңғы бөлік'],
+    answers: {
+      ru: 'По frontend часть портфолио показывает работу с современными интерфейсами, компонентами, адаптивной версткой и React-подходом.',
+      kz: 'Frontend жағында портфолио заманауи интерфейстермен, компоненттермен, адаптивті беттеумен және React тәсілімен жұмыс істей алатынын көрсетеді.',
+      en: 'For frontend, the portfolio shows work with modern interfaces, components, responsive layouts, and a React-based approach.',
+    },
   },
   {
-    keywords: ['backend', 'бекенд', 'бэкенд', 'node', 'express', 'api', 'server', 'сервер', 'database', 'postgres', 'sql'],
-    answer: 'По backend можно ориентироваться на серверную разработку, API, работу с базой данных и связку frontend + backend в full stack проектах.',
+    keywords: ['backend', 'бекенд', 'бэкенд', 'node', 'express', 'api', 'server', 'сервер', 'database', 'postgres', 'sql', 'артқы бөлік', 'дерекқор'],
+    answers: {
+      ru: 'По backend можно ориентироваться на серверную разработку, API, работу с базой данных и связку frontend + backend в full stack проектах.',
+      kz: 'Backend жағында серверлік әзірлеу, API, дерекқормен жұмыс және full stack жобалардағы frontend + backend байланысы көрсетіледі.',
+      en: 'For backend, the portfolio points to server-side development, APIs, database work, and frontend + backend integration in full stack projects.',
+    },
   },
   {
-    keywords: ['опыт', 'experience', 'стаж', 'работал', 'years', 'лет опыта', 'сколько опыта'],
-    answer: 'Опыт показан на главном экране и в разделе Experience. Сейчас на главной указано 5+ years of experience.',
+    keywords: ['опыт', 'experience', 'стаж', 'работал', 'years', 'лет опыта', 'сколько опыта', 'тәжірибе', 'жұмыс тәжірибесі', 'қанша жыл'],
+    answers: {
+      ru: 'Опыт показан на главном экране и в разделе Experience. Сейчас на главной указано 5+ years of experience.',
+      kz: 'Тәжірибе басты бетте және Experience бөлімінде көрсетілген. Қазір басты бетте 5+ years of experience деп жазылған.',
+      en: 'Experience is shown on the home page and in the Experience section. The home page currently says 5+ years of experience.',
+    },
   },
   {
-    keywords: ['образование', 'education', 'учеба', 'учёба', 'университет', 'колледж', 'диплом'],
-    answer: 'Информация об образовании находится в разделе Education. Там можно посмотреть учебные данные, если они заполнены в портфолио.',
+    keywords: ['образование', 'education', 'учеба', 'учёба', 'университет', 'колледж', 'диплом', 'білім', 'оқу', 'университеті'],
+    answers: {
+      ru: 'Информация об образовании находится в разделе Education. Там можно посмотреть учебные данные, если они заполнены в портфолио.',
+      kz: 'Білім туралы ақпарат Education бөлімінде орналасқан. Егер портфолиода толтырылған болса, оқу деректерін сол жерден көруге болады.',
+      en: 'Education information is in the Education section. If filled in, that section contains the study details.',
+    },
   },
   {
-    keywords: ['сертификат', 'сертификаты', 'certificate', 'certificates', 'курс', 'курсы'],
-    answer: 'Сертификаты можно посмотреть в разделе Certificates. Этот раздел показывает подтверждения обучения и дополнительных навыков.',
+    keywords: ['сертификат', 'сертификаты', 'certificate', 'certificates', 'курс', 'курсы', 'сертификаттар', 'курстар'],
+    answers: {
+      ru: 'Сертификаты можно посмотреть в разделе Certificates. Этот раздел показывает подтверждения обучения и дополнительных навыков.',
+      kz: 'Сертификаттарды Certificates бөлімінен көруге болады. Бұл бөлім оқуды және қосымша дағдыларды растайтын ақпаратты көрсетеді.',
+      en: 'Certificates are available in the Certificates section. That section shows proof of learning and additional skills.',
+    },
   },
   {
-    keywords: ['контакт', 'контакты', 'contact', 'связаться', 'связь', 'telegram', 'телеграм', 'email', 'почта', 'написать', 'заказать', 'нанять', 'hire', 'работа', 'сотрудничество'],
-    answer: 'Для связи открой раздел Contact или нажми кнопку Get in Touch на главном экране. Там удобнее всего оставить сообщение или найти контактные данные.',
+    keywords: ['контакт', 'контакты', 'contact', 'связаться', 'связь', 'telegram', 'телеграм', 'email', 'почта', 'написать', 'заказать', 'нанять', 'hire', 'работа', 'сотрудничество', 'байланыс', 'хабарласу', 'жазу', 'тапсырыс', 'жұмыс'],
+    answers: {
+      ru: 'Для связи открой раздел Contact или нажми кнопку Get in Touch на главном экране. Там удобнее всего оставить сообщение или найти контактные данные.',
+      kz: 'Байланысу үшін Contact бөлімін ашыңыз немесе басты беттегі Get in Touch батырмасын басыңыз. Сол жерде хабарлама қалдыруға немесе байланыс деректерін табуға болады.',
+      en: 'To get in touch, open the Contact section or click Get in Touch on the home page. That is the best place to leave a message or find contact details.',
+    },
   },
   {
-    keywords: ['цена', 'стоимость', 'сколько стоит', 'прайс', 'бюджет', 'заказ сайта', 'сделать сайт'],
-    answer: 'Стоимость зависит от задачи, сроков и объема работы. Лучше перейти в Contact и коротко описать проект, чтобы можно было обсудить детали.',
+    keywords: ['цена', 'стоимость', 'сколько стоит', 'прайс', 'бюджет', 'заказ сайта', 'сделать сайт', 'баға', 'құны', 'қанша тұрады', 'сайт жасау'],
+    answers: {
+      ru: 'Стоимость зависит от задачи, сроков и объема работы. Лучше перейти в Contact и коротко описать проект, чтобы можно было обсудить детали.',
+      kz: 'Баға тапсырмаға, мерзімге және жұмыс көлеміне байланысты. Толығырақ талқылау үшін Contact бөліміне өтіп, жобаны қысқаша сипаттаған дұрыс.',
+      en: 'The price depends on the task, timeline, and scope. It is best to go to Contact and briefly describe the project so the details can be discussed.',
+    },
   },
   {
-    keywords: ['доступен', 'available', 'свободен', 'занят', 'работаешь', 'можно заказать', 'можно написать'],
-    answer: 'На главном экране указано "Available for work", значит можно написать по поводу проекта или сотрудничества через Contact.',
+    keywords: ['доступен', 'available', 'свободен', 'занят', 'работаешь', 'можно заказать', 'можно написать', 'бос', 'қолжетімді', 'тапсырыс беруге бола ма'],
+    answers: {
+      ru: 'На главном экране указано "Available for work", значит можно написать по поводу проекта или сотрудничества через Contact.',
+      kz: 'Басты бетте "Available for work" деп көрсетілген, демек жоба немесе ынтымақтастық бойынша Contact арқылы жазуға болады.',
+      en: 'The home page says "Available for work", so you can contact him about a project or collaboration through Contact.',
+    },
   },
   {
-    keywords: ['резюме', 'cv', 'resume', 'скачать', 'download'],
-    answer: 'Если резюме добавлено на сайт, его стоит искать рядом с блоком About или Contact. Еще можно написать через Contact и запросить актуальное CV напрямую.',
+    keywords: ['резюме', 'cv', 'resume', 'скачать', 'download', 'жүктеу', 'түйіндеме'],
+    answers: {
+      ru: 'Если резюме добавлено на сайт, его стоит искать рядом с блоком About или Contact. Еще можно написать через Contact и запросить актуальное CV напрямую.',
+      kz: 'Егер резюме сайтқа қосылған болса, оны About немесе Contact бөлімінен іздеген дұрыс. Сондай-ақ Contact арқылы актуалды CV сұрауға болады.',
+      en: 'If a resume is added to the site, look near the About or Contact section. You can also use Contact to request the latest CV directly.',
+    },
   },
   {
-    keywords: ['где найти', 'куда нажать', 'навигация', 'меню', 'раздел', 'разделы', 'about', 'contact', 'education', 'experience', 'certificates', 'blog'],
-    answer: 'Навигация находится сверху: Home, About, Projects, Skills, Experience, Education, Certificates, Blog и Contact. Нажми нужный раздел, чтобы быстро перейти к информации.',
+    keywords: ['где найти', 'куда нажать', 'навигация', 'меню', 'раздел', 'разделы', 'about', 'contact', 'education', 'experience', 'certificates', 'blog', 'қайдан табам', 'қайда басу', 'бөлім', 'мәзір'],
+    answers: {
+      ru: 'Навигация находится сверху: Home, About, Projects, Skills, Experience, Education, Certificates, Blog и Contact. Нажми нужный раздел, чтобы быстро перейти к информации.',
+      kz: 'Навигация жоғарыда орналасқан: Home, About, Projects, Skills, Experience, Education, Certificates, Blog және Contact. Керек бөлімді басып, ақпаратқа тез өте аласыз.',
+      en: 'The navigation is at the top: Home, About, Projects, Skills, Experience, Education, Certificates, Blog, and Contact. Click a section to jump to the information.',
+    },
   },
   {
-    keywords: ['язык', 'language', 'en', 'ru', 'kz', 'қазақша', 'english', 'русский'],
-    answer: 'Язык сайта можно переключить в верхней панели. Ассистент тоже подстраивает интерфейс под выбранный язык, но ответы по портфолио сейчас подготовлены в основном на русском.',
+    keywords: ['язык', 'language', 'en', 'ru', 'kz', 'қазақша', 'english', 'русский', 'тіл', 'ағылшынша', 'орысша'],
+    answers: {
+      ru: 'Язык сайта можно переключить в верхней панели. Ассистент отвечает на русском, казахском или английском в зависимости от выбранного языка сайта.',
+      kz: 'Сайт тілін жоғарғы панельден ауыстыруға болады. Ассистент сайтта таңдалған тілге қарай қазақша, орысша немесе ағылшынша жауап береді.',
+      en: 'You can switch the site language in the top bar. The assistant replies in Russian, Kazakh, or English depending on the selected site language.',
+    },
   },
 ];
 
-function getPreparedAssistantAnswer(question) {
-  const normalizedQuestion = question
+const assistantFallbackAnswers = {
+  ru: 'Я лучше всего отвечаю на вопросы по этому портфолио. Можешь спросить про проекты, навыки, опыт, образование, сертификаты, контакты или сотрудничество.',
+  kz: 'Мен ең жақсы осы портфолио туралы сұрақтарға жауап беремін. Жобалар, дағдылар, тәжірибе, білім, сертификаттар, байланыс немесе ынтымақтастық туралы сұраңыз.',
+  en: 'I answer best about this portfolio. You can ask about projects, skills, experience, education, certificates, contacts, or collaboration.',
+};
+
+const assistantLanguageHints = {
+  ru: ['привет', 'как дела', 'кто', 'автор', 'проект', 'проекты', 'навык', 'навыки', 'стек', 'опыт', 'образование', 'сертификат', 'контакт', 'цена', 'стоимость', 'резюме', 'язык', 'помощь', 'спасибо'],
+  kz: ['сәлем', 'салем', 'қалай', 'калай', 'қалың қалай', 'жоба', 'жобалар', 'қандай', 'кандай', 'дағды', 'дагды', 'тәжірибе', 'тажірибе', 'білім', 'билим', 'байланыс', 'баға', 'бағасы', 'багасы', 'рахмет', 'қазақша', 'казакша', 'ағылшынша', 'орысша'],
+  en: ['hello', 'hi', 'hey', 'how are you', 'project', 'projects', 'skill', 'skills', 'stack', 'experience', 'education', 'certificate', 'contact', 'price', 'cost', 'resume', 'language', 'help', 'thanks', 'thank you'],
+};
+
+function getAssistantLang(lang) {
+  return ['ru', 'kz', 'en'].includes(lang) ? lang : 'en';
+}
+
+function normalizeAssistantText(value) {
+  return value
     .toLowerCase()
     .replaceAll('ё', 'е')
     .replaceAll('ә', 'а');
+}
 
+function detectAssistantQuestionLang(question, fallbackLang = 'en') {
+  const fallback = getAssistantLang(fallbackLang);
+  const source = question.toLowerCase();
+  const normalizedQuestion = normalizeAssistantText(question);
+
+  if (/[әғқңөұүіһ]/i.test(source)) {
+    return 'kz';
+  }
+
+  const scores = { ru: 0, kz: 0, en: 0 };
+  const latinCount = (source.match(/[a-z]/g) || []).length;
+  const cyrillicCount = (source.match(/[а-яёәғқңөұүіһ]/gi) || []).length;
+
+  if (latinCount >= 2 && latinCount > cyrillicCount) {
+    scores.en += 2;
+  }
+
+  if (cyrillicCount >= 2 && cyrillicCount > latinCount) {
+    scores.ru += 1;
+  }
+
+  Object.entries(assistantLanguageHints).forEach(([language, hints]) => {
+    hints.forEach((hint) => {
+      if (normalizedQuestion.includes(normalizeAssistantText(hint))) {
+        scores[language] += 2;
+      }
+    });
+  });
+
+  const bestLanguage = Object.entries(scores)
+    .sort(([, leftScore], [, rightScore]) => rightScore - leftScore)[0];
+
+  return bestLanguage?.[1] > 0 ? bestLanguage[0] : fallback;
+}
+
+function getPreparedAssistantAnswer(question, fallbackLang = 'en') {
+  const answerLang = detectAssistantQuestionLang(question, fallbackLang);
+  const normalizedQuestion = normalizeAssistantText(question);
   const matchedGroup = assistantAnswerGroups.find((group) => (
-    group.keywords.some((keyword) => normalizedQuestion.includes(keyword))
+    group.keywords.some((keyword) => normalizedQuestion.includes(normalizeAssistantText(keyword)))
   ));
 
   if (matchedGroup) {
-    return matchedGroup.answer;
+    return matchedGroup.answers[answerLang] || matchedGroup.answers.en;
   }
 
-  return 'Я лучше всего отвечаю на вопросы по этому портфолио. Можешь спросить про проекты, навыки, опыт, образование, сертификаты, контакты или сотрудничество.';
+  return assistantFallbackAnswers[answerLang] || assistantFallbackAnswers.en;
 }
 
 // AI Assistant Widget
@@ -268,40 +403,38 @@ function AiAssistantWidget({ lang }) {
   const [isClosing, setIsClosing] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Привет! Я ИИ ассистент. Задайте вопрос, и я отвечу.' },
-  ]);
+  const [messages, setMessages] = useState([]);
 
   const copyByLang = {
     kz: {
-      button: 'ИИ ассистент',
-      title: 'ИИ ассистент',
-      status: 'Сұрақтарға жауап береді',
+      button: 'AI ассистент',
+      title: 'AI ассистент',
+      status: 'Портфолио бойынша жауап береді',
       placeholder: 'Сұрағыңызды жазыңыз...',
-      loading: 'Ойлануда...',
+      loading: 'Ойланып жатыр...',
       error: 'Жауап алу мүмкін болмады. Қайталап көріңіз.',
       close: 'Жабу',
-      greeting: 'Сәлем! Мен ИИ ассистентпін. Сұрақ қойыңыз, мен жауап беремін.',
+      greeting: 'Сәлем! Мен осы портфолионың AI ассистентімін. Автор, жобалар, дағдылар, тәжірибе немесе байланыс туралы сұраңыз.',
     },
     ru: {
-      button: 'ИИ ассистент',
-      title: 'ИИ ассистент',
+      button: 'AI ассистент',
+      title: 'AI ассистент',
       status: 'Отвечает на вопросы',
       placeholder: 'Напишите вопрос...',
       loading: 'Думаю...',
       error: 'Не удалось получить ответ. Попробуйте еще раз.',
       close: 'Закрыть',
-      greeting: 'Привет! Я ИИ ассистент. Задайте вопрос, и я отвечу.',
+      greeting: 'Привет! Я AI ассистент этого портфолио. Спросите про автора, проекты, навыки, опыт или контакты.',
     },
     en: {
       button: 'AI assistant',
       title: 'AI assistant',
-      status: 'Answers questions',
+      status: 'Answers portfolio questions',
       placeholder: 'Write a question...',
       loading: 'Thinking...',
       error: 'Could not get an answer. Please try again.',
       close: 'Close',
-      greeting: 'Hi! I am an AI assistant. Ask a question and I will answer.',
+      greeting: 'Hi! I am the AI assistant for this portfolio. Ask about the author, projects, skills, experience, or contacts.',
     },
   };
   const copy = copyByLang[lang] || copyByLang.en;
@@ -361,7 +494,7 @@ function AiAssistantWidget({ lang }) {
 
     const thinkingDelay = 2000 + Math.floor(Math.random() * 3001);
     responseTimeoutRef.current = setTimeout(() => {
-      const answer = getPreparedAssistantAnswer(question);
+      const answer = getPreparedAssistantAnswer(question, lang);
       setMessages([...nextMessages, { role: 'assistant', content: answer }]);
       setIsThinking(false);
       responseTimeoutRef.current = null;
