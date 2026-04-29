@@ -4063,6 +4063,25 @@ body.admin-modal-open {
 /* ============================================================
    AI ASSISTANT
    ============================================================ */
+.ai-assistant-widget {
+  pointer-events: none;
+}
+
+.ai-assistant-widget > * {
+  pointer-events: auto;
+}
+
+.ai-assistant-panel {
+  max-width: calc(100vw - 2rem);
+}
+
+.ai-assistant-messages {
+  flex: 1 1 auto;
+  min-height: 0;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
 .ai-assistant-panel.is-open {
   transform-origin: 100% 100%;
   animation: ai-panel-in 0.32s cubic-bezier(0.2, 0.9, 0.2, 1) both;
@@ -4210,6 +4229,60 @@ body.admin-modal-open {
   .ai-assistant-typing,
   .ai-assistant-typing-dots i {
     animation: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .ai-assistant-widget {
+    left: max(0.75rem, env(safe-area-inset-left)) !important;
+    right: max(0.75rem, env(safe-area-inset-right)) !important;
+    bottom: max(0.75rem, env(safe-area-inset-bottom)) !important;
+    align-items: stretch !important;
+    gap: 0.65rem !important;
+  }
+
+  .ai-assistant-panel {
+    width: 100% !important;
+    max-width: none !important;
+    max-height: min(72vh, calc(100vh - 5.75rem)) !important;
+    border-radius: 20px !important;
+  }
+
+  .ai-assistant-messages {
+    max-height: calc(100vh - 15rem) !important;
+    padding: 0.85rem !important;
+  }
+
+  .ai-assistant-trigger {
+    align-self: flex-end !important;
+    min-height: 52px !important;
+    padding: 0 0.9rem !important;
+    border-radius: 16px !important;
+    font-size: 0.86rem !important;
+  }
+}
+
+@supports (height: 100dvh) {
+  @media (max-width: 640px) {
+    .ai-assistant-panel {
+      max-height: min(72dvh, calc(100dvh - 5.75rem)) !important;
+    }
+
+    .ai-assistant-messages {
+      max-height: calc(100dvh - 15rem) !important;
+    }
+  }
+}
+
+@media (max-width: 380px) {
+  .ai-assistant-trigger {
+    width: 54px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+
+  .ai-assistant-trigger-label {
+    display: none;
   }
 }
 

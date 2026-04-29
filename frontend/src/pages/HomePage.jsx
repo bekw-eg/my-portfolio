@@ -384,10 +384,10 @@ function AiAssistantWidget({ lang }) {
 
   return (
     <div className="ai-assistant-widget" style={{
-      position: 'absolute',
-      right: 'clamp(1rem, 7vw, 7rem)',
-      bottom: 'clamp(1.4rem, 8vh, 4.5rem)',
-      zIndex: 30,
+      position: 'fixed',
+      right: 'max(1rem, env(safe-area-inset-right))',
+      bottom: 'max(1rem, env(safe-area-inset-bottom))',
+      zIndex: 1000,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-end',
@@ -403,12 +403,15 @@ function AiAssistantWidget({ lang }) {
           }}
           style={{
           width: 'min(390px, calc(100vw - 2rem))',
+          maxHeight: 'min(560px, calc(100vh - 7rem))',
           borderRadius: 22,
           background: 'rgba(255,255,255,0.92)',
           border: '1px solid rgba(226,234,248,0.95)',
           boxShadow: '0 24px 70px rgba(15,23,42,0.18)',
           backdropFilter: 'blur(22px)',
           overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
         }}>
           <div style={{
             padding: '1rem',
@@ -457,8 +460,8 @@ function AiAssistantWidget({ lang }) {
             </button>
           </div>
 
-          <div ref={messagesListRef} style={{
-            maxHeight: 270,
+          <div ref={messagesListRef} className="ai-assistant-messages" style={{
+            maxHeight: 'min(270px, calc(100vh - 18rem))',
             overflowY: 'auto',
             padding: '1rem',
             display: 'grid',
@@ -585,7 +588,7 @@ function AiAssistantWidget({ lang }) {
         }}
       >
         <Sparkles size={18} />
-        {copy.button}
+        <span className="ai-assistant-trigger-label">{copy.button}</span>
       </button>
     </div>
   );
@@ -648,6 +651,7 @@ export default function HomePage() {
   const title = profile?.[`title_${lang}`] || profile?.title_en || t('hero.default_role');
 
   return (
+    <>
     <div className="page-enter">
       {/* ── Hero ────────────────────────────────────────── */}
       <section style={{
@@ -748,8 +752,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-
-        <AiAssistantWidget lang={lang} />
 
         {/* Scroll indicator */}
         <div style={{
@@ -857,5 +859,7 @@ export default function HomePage() {
         </div>
       </section>
     </div>
+    <AiAssistantWidget lang={lang} />
+    </>
   );
 }
